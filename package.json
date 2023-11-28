@@ -4,7 +4,6 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
-    "@react-google-maps/api": "^2.19.2",
     "@reduxjs/toolkit": "^1.9.5",
     "@testing-library/jest-dom": "^5.16.5",
     "@testing-library/react": "^13.4.0",
@@ -15,6 +14,7 @@
     "bootstrap": "^5.3.1",
     "browserify-zlib": "latest",
     "ethers": "^5",
+    "google-map-react": "^2.2.1",
     "http": "npm:http-browserify",
     "http-browserify": "latest",
     "https": "npm:https-browserify",
@@ -34,6 +34,7 @@
     "react-spinners": "^0.13.8",
     "react-toastify": "^9.1.3",
     "stream": "^0.0.2",
+    "swiper": "^11.0.5",
     "url": "latest",
     "web-vitals": "^3.1.0",
     "zlib": "npm:browserify-zlib"

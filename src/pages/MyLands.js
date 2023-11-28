@@ -1,4 +1,4 @@
-import React, {useEffect} from "react";
+import React, { useEffect } from "react";
 import { Container, Row } from "react-bootstrap";
 import { useAddress, useContract, useContractRead } from "@thirdweb-dev/react";
 import LandCards from "../components/LandCards";
@@ -10,7 +10,7 @@ const AllLands = () => {
   const address = useAddress();
   const navigate = useNavigate();
   const { contract } = useContract(process.env.REACT_APP_CONTRACT_ADDRESS);
-  const { data, isLoading } = useContractRead(
+  let { data, isLoading } = useContractRead(
     contract,
     "getLandIdsOfLandOwner",
     [address],
@@ -18,10 +18,14 @@ const AllLands = () => {
       from: address,
     }
   );
+
+  data = data?.filter((landsMapData)=>{
+    return (landsMapData !== "0x0000000000000000000000000000000000000000000000000000000000000000")
+  })
+
+  console.log(data);
+
   const { data: landOwnerData, isLoading: landOwnerLoading } = useContractRead(contract, "getUserType", [address])
-  useEffect(() => {
-    console.log("Running..");
-  }, [address]);
 
   useEffect(() => {
     if (landOwnerData?.toString() !== "2" && !landOwnerLoading) {
@@ -33,24 +37,32 @@ const AllLands = () => {
     <div>
       <NavbarTop />
       <Container>
+        <h1 className="mt-5">Land Owned by You</h1>
         {isLoading ? (
           <div className="d-flex justify-content-center align-items-center">
-            <DotLoader color="#0d6efd" />
+            <DotLoader color="36d7b7" size={200} className="homeLoader mt-5" />
           </div>
         ) : (
-        <>
-          <h1 className="mt-5">Land Owned by You</h1>
-          {data?.length > 0 ? (
-            <Row className="my-5" xs={1} md={2} lg={3}>
-              {data &&
-                data?.map((landsMapData, i) => {
-                  return <LandCards landsData={landsMapData} />;
-                })}
-            </Row>
-          ) : (
-            <DotLoader color="#36d7b7" size={200} className="homeLoader" />
-          )}
-        </>
+          <>
+            {data?.length > 0 ? (
+              <Row className="my-5" xs={1} md={2} lg={3}>
+                {data &&
+                  data?.map((landsMapData, i) => {
+                    return <LandCards landsData={landsMapData} key={i} />;
+                  })
+                }
+              </Row>
+            ) : (
+              <div 
+                className="d-flex justify-content-center align-items-center"
+                style={{
+                  height: "50vh"
+                }}
+              >
+                Sorry! You don't have any Estate.
+              </div>
+            )}
+          </>
         )}
       </Container>
     </div>

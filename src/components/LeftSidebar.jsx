@@ -8,7 +8,7 @@ import transactionLogo from "../assets/trending-up.svg"
 import settingLogo from "../assets/settings.svg"
 import supportLogo from "../assets/life-buoy.svg"
 import logOutLogo from "../assets/log-out.svg"
-import Logo from "../assets/lagos logo 1.png"
+import Logo from "../assets/logo.png"
 import Search from './Search';
 import avatar from "../assets/Avatar.svg"
 import { BsBox } from 'react-icons/bs';

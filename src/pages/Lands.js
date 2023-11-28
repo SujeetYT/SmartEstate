@@ -1,7 +1,7 @@
 import React from "react";
 import { Col, Container, Row, Table } from "react-bootstrap";
 import NavbarTop from "../components/NavbarTop";
-import { GoogleMap, useJsApiLoader } from "@react-google-maps/api";
+// import { GoogleMap, useJsApiLoader } from "@react-google-maps/api";
 import { useParams } from "react-router";
 import { useContract, useContractRead } from "@thirdweb-dev/react";
 import moment from "moment";
@@ -11,8 +11,15 @@ import { BiClipboard } from "react-icons/bi";
 import { toast } from "react-toastify";
 import PersonDetailAdminModal from "../components/PersonDetailAdminModal";
 import { BeatLoader } from "react-spinners";
+import { Scrollbar, Mousewheel } from "swiper/modules";
+import { Swiper, SwiperSlide } from "swiper/react";
+
 
 export const Lands = () => {
+  const [gridImgData, setGridImgData] = useState([{ id: 1, image: "" }])
+  const [active, setActive] = useState(0);
+  const [slidesPerView, setSlidesPerView] = useState(4);
+
   const { contract } = useContract(process.env.REACT_APP_CONTRACT_ADDRESS);
 
   const _landId = useParams().landId;
@@ -36,10 +43,10 @@ export const Lands = () => {
 
   const [center, setCenter] = React.useState({ lat: 40.72212, lng: 74.043176 });
   const [name, setName] = React.useState("1530 Dumble St.");
-  const { isLoaded } = useJsApiLoader({
-    id: "google-map-script",
-    googleMapsApiKey: process.env.REACT_APP_GOOGLE_MAP_API_KEY,
-  });
+  // const { isLoaded } = useJsApiLoader({
+  //   id: "google-map-script",
+  //   googleMapsApiKey: process.env.REACT_APP_GOOGLE_MAP_API_KEY,
+  // });
 
   const location = async () => {
     const newLocation = await data?.location;
@@ -71,20 +78,65 @@ export const Lands = () => {
     toast.success("Copied");
   };
 
+  useEffect(() => {
+    const handleResize = () => {
+      const screenWidth = window.innerWidth;
+      if (screenWidth >= 1200) {
+        setSlidesPerView(4);
+      } else if (screenWidth >= 768 || screenWidth <= 1200) {
+        setSlidesPerView(3);
+      } else if (screenWidth >= 576 || screenWidth >= 578) {
+        setSlidesPerView(3);
+      } else if (screenWidth < 576) {
+        setSlidesPerView(3);
+      } else {
+        setSlidesPerView(1);
+      }
+    };
+    window.addEventListener("resize", handleResize);
+    return () => {
+      window.removeEventListener("resize", handleResize);
+    };
+  }, []);
+
   return (
     <>
       <NavbarTop />
       <Container className="my-5">
         <Row xs={1} md={2}>
           <Col className="mb-5 mb-md-0" style={{ minHeight: "50vh" }}>
-            {isLoaded && (
-              <GoogleMap
-                mapContainerStyle={{ width: "100%", height: "100%" }}
-                center={center}
-                zoom={15}
-                onLoad={onLoad}
-              />
-            )}
+            <div
+              className='mainImage'
+              style={{
+                backgroundImage: `url(${gridImgData[active].image})`,
+              }}
+            ></div>
+            <div className='mt-4'>
+              <Swiper
+                modules={[Mousewheel, Scrollbar]}
+                spaceBetween={2}
+                slidesPerView={slidesPerView}
+                scrollbar={{ draggable: true }}
+                mousewheel={true}
+                keyboard={{
+                  enabled: true,
+                }}
+              >
+                {gridImgData.map((item, i) => (
+                  <SwiperSlide
+                    key={item.id}
+                    style={{ width: "100px", height: "100px" }}
+                  >
+                    <div
+                      key={i}
+                      className={`sliderImage border-2 p-2 text-center ${active === i ? "border-primary" : ""}`}
+                      style={{ backgroundImage: `url(${item.image})` }}
+                      onMouseEnter={() => setActive(i)}
+                    ></div>
+                  </SwiperSlide>
+                ))}
+              </Swiper>
+            </div>
           </Col>
           <Col>
             <h3 className="mb-4 fw-bold" type="button" onClick={handleShow}>

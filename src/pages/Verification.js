@@ -21,8 +21,8 @@ export const Verification = () => {
         <p>This is the verification page</p>
         <Form onSubmit={handleSubmit}>
           <Form.Group controlId="formBasicEmail">
-            <Form.Label>Land Hash</Form.Label>
-            <Form.Control type="text" placeholder="Enter land hash" />
+            <Form.Label>Land ID</Form.Label>
+            <Form.Control type="text" placeholder="Enter Land ID" />
           </Form.Group>
           <Button variant="primary" type="submit" className="mt-3">
             Verify

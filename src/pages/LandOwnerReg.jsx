@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { Col, Container, Form } from "react-bootstrap";
-import logo from "../assets/lagos logo 1.png";
+import logo from "../assets/logo.png";
 import NavbarTop from "../components/NavbarTop";
 import "react-bootstrap-country-select/dist/react-bootstrap-country-select.css";
 import CountrySelect from "react-bootstrap-country-select";
@@ -8,11 +8,11 @@ import { useContract, useContractWrite, useStorage } from "@thirdweb-dev/react";
 import { toast } from "react-toastify";
 
 const LandOwnerReg = () => {
-  const [nationality, setNationality] = useState(null);
-  const [asset, setAsset] = useState(null);
+  const [nationality, setNationality] = useState("");
+  const [asset, setAsset] = useState("");
   const [selectedValue, setSelectedValue] = useState("");
 
-  const { contract } = useContract(process.env.REACT_APP_CONTRACT_ADDRESS);
+  const { contract } = useContract(process.env.REACT_APP_CONTRACT_ADDRESS);  
   const { mutateAsync: newOwnerRegistration, isLoading } = useContractWrite(
     contract,
     "newOwnerRegistration"
@@ -36,6 +36,8 @@ const LandOwnerReg = () => {
     const firstName = document.getElementById("firstName").value;
     const address = document.getElementById("address").value;
     const idNumber = document.getElementById("idNumber").value;
+
+    
     try {
       const data = await newOwnerRegistration({
         args: [
@@ -47,10 +49,10 @@ const LandOwnerReg = () => {
           asset,
         ],
       });
-      console.info("contract call success", data);
+      console.log("contract call success", data);
       toast.success("Owner Registered Successfully !!!");
     } catch (err) {
-      console.error("contract call failure", err);
+      console.log("contract call failure", err);
       toast.error("Something Went Wrong !!");
     }
   };
@@ -79,7 +81,7 @@ const LandOwnerReg = () => {
             <Col>
               {" "}
               <CountrySelect
-                value={nationality}
+                value={nationality || ""}
                 onChange={setNationality}
               />{" "}
             </Col>

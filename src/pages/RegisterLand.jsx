@@ -14,6 +14,7 @@ const ManageLand = () => {
   const address = useAddress();
   const [asset, setAsset] = useState(null);
   const { contract } = useContract(process.env.REACT_APP_CONTRACT_ADDRESS);
+  console.log("contract",contract);
   const { mutateAsync: newLandRegistrationRequest, isLoading } = useContractWrite(contract, "newLandRegistrationRequest")
   const storage = useStorage();
   const [latitude, setLatitude] = useState(null);
@@ -97,8 +98,8 @@ const ManageLand = () => {
 
             <Row className='my-5'>
               <Col sm={3} xs={3} lg={4}> <Form.Label className='fw-bold'>Location</Form.Label></Col>
-              <Col sm={3} xs={3}> <Form.Control type="text" placeholder="9.227954" id='latitude' value={latitude} required disabled/> </Col>
-              <Col sm={3} xs={3}> <Form.Control type="text" placeholder="7.900708" id='longitude' value={longitude} required disabled/> </Col>
+              <Col sm={3} xs={3}> <Form.Control type="text" placeholder="9.227954" id='latitude' value={latitude || ""} required disabled/> </Col>
+              <Col sm={3} xs={3}> <Form.Control type="text" placeholder="7.900708" id='longitude' value={longitude || ""} required disabled/> </Col>
               <Col> <Button onClick={handleLocation}><MdOutlineMyLocation size={20} /></Button> </Col>
             </Row>
 
