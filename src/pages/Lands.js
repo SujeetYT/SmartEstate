@@ -35,7 +35,7 @@ export const Lands = () => {
 
   const handleShow = () => setPersonalDetail(true);
 
-  const [parts, setParts] = useState([]);
+  const [parts, setParts] = useState(['40.72212', '74.043176']);
 
   useEffect(() => {
     location();
@@ -49,10 +49,13 @@ export const Lands = () => {
   // });
 
   const location = async () => {
-    const newLocation = await data?.location;
-    const partsArray = await newLocation?.split(",");
-    setParts(partsArray);
-    setCenter({ lat: Number(parts[0]), lng: Number(parts[1]) });
+    try {
+      const partsArray = await data?.location?.split(",");
+      setParts(partsArray);
+      setCenter({ lat: Number(parts[0]), lng: Number(parts[1]) });
+    } catch (error) {
+      console.log(error);
+    }
   };
   // Add markers to map
   const onLoad = React.useCallback(
@@ -74,8 +77,12 @@ export const Lands = () => {
   );
 
   const copyHandler = () => {
-    navigator?.clipboard?.writeText(_landId);
-    toast.success("Copied");
+    try {
+      navigator?.clipboard?.writeText(_landId);
+      toast.success("Copied");
+    } catch (error) {
+      toast.error(error.message)
+    }
   };
 
   useEffect(() => {
