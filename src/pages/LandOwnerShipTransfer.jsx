@@ -43,9 +43,13 @@ const LandOwnerShipTransfer = () => {
         }
     }
     const handlePaste = () => {
-        navigator.clipboard.readText().then((text) => {
-            document.getElementById("landId").value = text;
-        });
+        try {
+            navigator.clipboard.readText().then((text) => {
+                document.getElementById("landId").value = text;
+            });
+        } catch (error) {
+            toast.error(error.message)
+        }
     }
 
     useEffect(() => {
