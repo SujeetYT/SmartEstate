@@ -4,7 +4,7 @@ import { Button, Container } from "react-bootstrap";
 import Form from "react-bootstrap/Form";
 import { VerificationTable } from "../components/VerificationTable";
 
-export const Verification = () => {
+export const History = () => {
   const [id, setId] = React.useState(null);
 
   const handleSubmit = (e) => {
@@ -17,8 +17,8 @@ export const Verification = () => {
     <div>
       <NavbarTop />
       <Container className="my-5">
-        <h2>Verify lands with the land hash</h2>
-        <p>This is the verification page</p>
+        <h2>Ownership transfer history</h2>
+        <p>This page contains land ownership transfer history with land details</p>
         <Form onSubmit={handleSubmit}>
           <Form.Group controlId="formBasicEmail">
             <Form.Label>Land ID</Form.Label>
@@ -28,7 +28,12 @@ export const Verification = () => {
             Verify
           </Button>
         </Form>
-        {id && <VerificationTable id={id} />}
+        {id &&
+          <>
+            <h3 className="mt-3 text-center">Land Details</h3>
+            <VerificationTable id={id} />
+          </>
+        }
       </Container>
     </div>
   );

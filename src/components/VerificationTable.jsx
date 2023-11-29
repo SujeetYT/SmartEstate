@@ -20,7 +20,7 @@ export const VerificationTable = ({ id }) => {
       ) : (
         <>
           {data?.registrationDate?.toString() === "0" ? (
-            <h4 className="mt-5 text-center text-danger">
+            <h4 className="mt-2 text-center text-danger">
               Land not registered
             </h4>
           ) : null}
@@ -43,7 +43,7 @@ export const VerificationTable = ({ id }) => {
                 <td>{data?.location}</td>
               </tr>
               <tr>
-                <th>Owner</th>
+                <th>Current Owner</th>
                 <td>{data?.ownerName}</td>
               </tr>
               <tr>

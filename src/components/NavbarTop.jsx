@@ -51,8 +51,8 @@ const NavbarTop = () => {
               {/* <Nav.Link as={Link} to="/status">
                 Status
               </Nav.Link> */}
-              <Nav.Link as={Link} to="/verification">
-                Verify
+              <Nav.Link as={Link} to="/history">
+                History
               </Nav.Link>
               {!isDesktop && <ConnectWallet theme="light" />}
             </Nav>

@@ -11,7 +11,7 @@ import LandOwnerShipTransfer from "./pages/LandOwnerShipTransfer";
 import { Lands } from "./pages/Lands";
 import AllLands from "./pages/MyLands";
 import { Status } from "./pages/Status";
-import { Verification } from "./pages/Verification";
+import { History } from "./pages/History";
 
 export default function App() {
   return (
@@ -29,7 +29,7 @@ export default function App() {
         <Route path="/land/:landId" element={<Lands />} />
         <Route path="/my-lands" element={<AllLands />} />
         <Route path="/status" element={<Status />} />
-        <Route path="/verification" element={<Verification />} />
+        <Route path="/history" element={<History />} />
       </Routes>
     </main>
   );
